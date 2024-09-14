@@ -23,7 +23,7 @@ impl MMapIOManager {
 }
 
 impl IoManager for MMapIOManager {
-    fn read(&mut self, buf: &mut [u8], offset: u64) -> Result<usize> {
+    fn read(&self, buf: &mut [u8], offset: u64) -> Result<usize> {
         let end = offset as usize + buf.len();
 
         if let Some(data) = self.mmap.get(offset as usize..end) {
@@ -72,7 +72,7 @@ mod tests {
         file.write_all(b"Hello, test!").unwrap();
         file.sync_all().unwrap();
 
-        let mut mio = MMapIOManager::new(&file_name).unwrap();
+        let mio = MMapIOManager::new(&file_name).unwrap();
         assert_eq!(mio.size().unwrap(), 12);
         let mut buf = vec![0u8; 5];
         let bytes_read = mio.read(&mut buf, 7).unwrap();

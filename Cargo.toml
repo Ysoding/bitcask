@@ -5,4 +5,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.88"
+bytes = "1.7.1"
+crc32fast = "1.4.2"
 memmap2 = "0.9.4"
+prost = "0.13.2"
+thiserror = "1.0.63"

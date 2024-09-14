@@ -20,7 +20,7 @@ impl FileIoManager {
 }
 
 impl IoManager for FileIoManager {
-    fn read(&mut self, buf: &mut [u8], offset: u64) -> Result<usize> {
+    fn read(&self, buf: &mut [u8], offset: u64) -> Result<usize> {
         Ok(self.file.read_at(buf, offset)?)
     }
 
@@ -70,7 +70,7 @@ mod tests {
         let mut file = File::create(file_name).unwrap();
         file.write_all(b"Hello, test!").unwrap();
 
-        let mut io_manager = FileIoManager::new(file_name).unwrap();
+        let io_manager = FileIoManager::new(file_name).unwrap();
         let mut buf = vec![0u8; 5];
 
         let bytes_read = io_manager.read(&mut buf, 0).unwrap();
